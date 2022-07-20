@@ -19,10 +19,10 @@ const fckNatInstanceProps: FckNatInstanceProps = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProps.property.instanceType">instanceType</a></code> | <code>@aws-cdk/aws-ec2.InstanceType</code> | Instance type of the fck-nat instance. |
+| <code><a href="#fck-nat-cdk.FckNatInstanceProps.property.instanceType">instanceType</a></code> | <code>aws-cdk-lib.aws_ec2.InstanceType</code> | Instance type of the fck-nat instance. |
 | <code><a href="#fck-nat-cdk.FckNatInstanceProps.property.keyName">keyName</a></code> | <code>string</code> | Name of SSH keypair to grant access to instance. |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProps.property.machineImage">machineImage</a></code> | <code>@aws-cdk/aws-ec2.IMachineImage</code> | The machine image (AMI) to use. |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProps.property.securityGroup">securityGroup</a></code> | <code>@aws-cdk/aws-ec2.ISecurityGroup</code> | Security Group for fck-nat instances. |
+| <code><a href="#fck-nat-cdk.FckNatInstanceProps.property.machineImage">machineImage</a></code> | <code>aws-cdk-lib.aws_ec2.IMachineImage</code> | The machine image (AMI) to use. |
+| <code><a href="#fck-nat-cdk.FckNatInstanceProps.property.securityGroup">securityGroup</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup</code> | Security Group for fck-nat instances. |
 
 ---
 
@@ -32,7 +32,7 @@ const fckNatInstanceProps: FckNatInstanceProps = { ... }
 public readonly instanceType: InstanceType;
 ```
 
-- *Type:* @aws-cdk/aws-ec2.InstanceType
+- *Type:* aws-cdk-lib.aws_ec2.InstanceType
 
 Instance type of the fck-nat instance.
 
@@ -57,7 +57,7 @@ Name of SSH keypair to grant access to instance.
 public readonly machineImage: IMachineImage;
 ```
 
-- *Type:* @aws-cdk/aws-ec2.IMachineImage
+- *Type:* aws-cdk-lib.aws_ec2.IMachineImage
 - *Default:* Latest fck-nat instance image
 
 The machine image (AMI) to use.
@@ -84,7 +84,7 @@ FckNatInstanceProvider({
 public readonly securityGroup: ISecurityGroup;
 ```
 
-- *Type:* @aws-cdk/aws-ec2.ISecurityGroup
+- *Type:* aws-cdk-lib.aws_ec2.ISecurityGroup
 - *Default:* A new security group will be created
 
 Security Group for fck-nat instances.
@@ -95,7 +95,7 @@ Security Group for fck-nat instances.
 
 ### FckNatInstanceProvider <a name="FckNatInstanceProvider" id="fck-nat-cdk.FckNatInstanceProvider"></a>
 
-- *Implements:* @aws-cdk/aws-ec2.IConnectable
+- *Implements:* aws-cdk-lib.aws_ec2.IConnectable
 
 #### Initializers <a name="Initializers" id="fck-nat-cdk.FckNatInstanceProvider.Initializer"></a>
 
@@ -138,7 +138,7 @@ Don't call this directly, the VPC will call it automatically.
 
 ###### `options`<sup>Required</sup> <a name="options" id="fck-nat-cdk.FckNatInstanceProvider.configureNat.parameter.options"></a>
 
-- *Type:* @aws-cdk/aws-ec2.ConfigureNatOptions
+- *Type:* aws-cdk-lib.aws_ec2.ConfigureNatOptions
 
 ---
 
@@ -154,7 +154,7 @@ Don't call this directly, the VPC will call it automatically.
 
 ###### `subnet`<sup>Required</sup> <a name="subnet" id="fck-nat-cdk.FckNatInstanceProvider.configureSubnet.parameter.subnet"></a>
 
-- *Type:* @aws-cdk/aws-ec2.PrivateSubnet
+- *Type:* aws-cdk-lib.aws_ec2.PrivateSubnet
 
 ---
 
@@ -183,7 +183,7 @@ NAT gateways are managed by AWS.
 
 ###### `props`<sup>Optional</sup> <a name="props" id="fck-nat-cdk.FckNatInstanceProvider.gateway.parameter.props"></a>
 
-- *Type:* @aws-cdk/aws-ec2.NatGatewayProps
+- *Type:* aws-cdk-lib.aws_ec2.NatGatewayProps
 
 ---
 
@@ -207,7 +207,7 @@ your own NatProvider based on AutoScaling groups if you need that.
 
 ###### `props`<sup>Required</sup> <a name="props" id="fck-nat-cdk.FckNatInstanceProvider.instance.parameter.props"></a>
 
-- *Type:* @aws-cdk/aws-ec2.NatInstanceProps
+- *Type:* aws-cdk-lib.aws_ec2.NatInstanceProps
 
 ---
 
@@ -215,9 +215,9 @@ your own NatProvider based on AutoScaling groups if you need that.
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProvider.property.configuredGateways">configuredGateways</a></code> | <code>@aws-cdk/aws-ec2.GatewayConfig[]</code> | Return list of gateways spawned by the provider. |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProvider.property.connections">connections</a></code> | <code>@aws-cdk/aws-ec2.Connections</code> | Manage the Security Groups associated with the NAT instances. |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProvider.property.securityGroup">securityGroup</a></code> | <code>@aws-cdk/aws-ec2.ISecurityGroup</code> | The Security Group associated with the NAT instances. |
+| <code><a href="#fck-nat-cdk.FckNatInstanceProvider.property.configuredGateways">configuredGateways</a></code> | <code>aws-cdk-lib.aws_ec2.GatewayConfig[]</code> | Return list of gateways spawned by the provider. |
+| <code><a href="#fck-nat-cdk.FckNatInstanceProvider.property.connections">connections</a></code> | <code>aws-cdk-lib.aws_ec2.Connections</code> | Manage the Security Groups associated with the NAT instances. |
+| <code><a href="#fck-nat-cdk.FckNatInstanceProvider.property.securityGroup">securityGroup</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup</code> | The Security Group associated with the NAT instances. |
 
 ---
 
@@ -227,7 +227,7 @@ your own NatProvider based on AutoScaling groups if you need that.
 public readonly configuredGateways: GatewayConfig[];
 ```
 
-- *Type:* @aws-cdk/aws-ec2.GatewayConfig[]
+- *Type:* aws-cdk-lib.aws_ec2.GatewayConfig[]
 
 Return list of gateways spawned by the provider.
 
@@ -239,7 +239,7 @@ Return list of gateways spawned by the provider.
 public readonly connections: Connections;
 ```
 
-- *Type:* @aws-cdk/aws-ec2.Connections
+- *Type:* aws-cdk-lib.aws_ec2.Connections
 
 Manage the Security Groups associated with the NAT instances.
 
@@ -251,7 +251,7 @@ Manage the Security Groups associated with the NAT instances.
 public readonly securityGroup: ISecurityGroup;
 ```
 
-- *Type:* @aws-cdk/aws-ec2.ISecurityGroup
+- *Type:* aws-cdk-lib.aws_ec2.ISecurityGroup
 
 The Security Group associated with the NAT instances.
 

@@ -1,6 +1,9 @@
-import { AutoScalingGroup } from '@aws-cdk/aws-autoscaling';
-import { InstanceType, CfnNetworkInterface, ConfigureNatOptions, Connections, GatewayConfig, IMachineImage, ISecurityGroup, LookupMachineImage, NatProvider, PrivateSubnet, RouterType, SecurityGroup, UserData, CfnEIP, CfnEIPAssociation, IConnectable } from '@aws-cdk/aws-ec2';
-import * as iam from '@aws-cdk/aws-iam';
+import {
+  aws_iam as iam,
+  aws_autoscaling as autoscaling,
+  aws_ec2 as ec2,
+} from 'aws-cdk-lib';
+
 /**
  * Preferential set
  *
@@ -54,12 +57,12 @@ export interface FckNatInstanceProps {
    *
    * @default - Latest fck-nat instance image
    */
-  readonly machineImage?: IMachineImage;
+  readonly machineImage?: ec2.IMachineImage;
 
   /**
    * Instance type of the fck-nat instance
    */
-  readonly instanceType: InstanceType;
+  readonly instanceType: ec2.InstanceType;
 
   /**
    * Name of SSH keypair to grant access to instance
@@ -73,29 +76,29 @@ export interface FckNatInstanceProps {
    *
    * @default - A new security group will be created
    */
-  readonly securityGroup?: ISecurityGroup;
+  readonly securityGroup?: ec2.ISecurityGroup;
 }
 
-export class FckNatInstanceProvider extends NatProvider implements IConnectable {
-  private gateways: PrefSet<CfnNetworkInterface> = new PrefSet<CfnNetworkInterface>();
-  private _securityGroup?: ISecurityGroup;
-  private _connections?: Connections;
+export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConnectable {
+  private gateways: PrefSet<ec2.CfnNetworkInterface> = new PrefSet<ec2.CfnNetworkInterface>();
+  private _securityGroup?: ec2.ISecurityGroup;
+  private _connections?: ec2.Connections;
 
   constructor(private readonly props: FckNatInstanceProps) {
     super();
   }
 
-  configureNat(options: ConfigureNatOptions): void {
+  configureNat(options: ec2.ConfigureNatOptions): void {
     // Create the NAT instances. They can share a security group and a Role.
-    const machineImage = this.props.machineImage || new LookupMachineImage({
+    const machineImage = this.props.machineImage || new ec2.LookupMachineImage({
       name: 'fck-nat-amzn2-*-arm64-ebs',
       owners: ['568608671756'],
     });
-    this._securityGroup = this.props.securityGroup ?? new SecurityGroup(options.vpc, 'NatSecurityGroup', {
+    this._securityGroup = this.props.securityGroup ?? new ec2.SecurityGroup(options.vpc, 'NatSecurityGroup', {
       vpc: options.vpc,
       description: 'Security Group for NAT instances',
     });
-    this._connections = new Connections({ securityGroups: [this._securityGroup] });
+    this._connections = new ec2.Connections({ securityGroups: [this._securityGroup] });
 
     // TODO: This should get buttoned up to only allow attaching ENIs created by this construct.
     const role = new iam.Role(options.vpc, 'NatRole', {
@@ -111,7 +114,7 @@ export class FckNatInstanceProvider extends NatProvider implements IConnectable 
     });
 
     for (const sub of options.natSubnets) {
-      const networkInterface = new CfnNetworkInterface(
+      const networkInterface = new ec2.CfnNetworkInterface(
         sub, 'FckNatInterface', {
           subnetId: sub.subnetId,
           sourceDestCheck: false,
@@ -119,20 +122,20 @@ export class FckNatInstanceProvider extends NatProvider implements IConnectable 
         },
       );
 
-      const eip = new CfnEIP(sub, 'Eip', {
+      const eip = new ec2.CfnEIP(sub, 'Eip', {
         domain: 'vpc',
       });
 
-      new CfnEIPAssociation(sub, 'EipAssociation', {
+      new ec2.CfnEIPAssociation(sub, 'EipAssociation', {
         allocationId: eip.attrAllocationId,
         networkInterfaceId: networkInterface.ref,
       });
 
-      const userData = UserData.forLinux();
+      const userData = ec2.UserData.forLinux();
       userData.addCommands(`echo "eni_id=${networkInterface.ref}" >> /etc/fck-nat.conf`);
       userData.addCommands('service fck-nat restart');
 
-      new AutoScalingGroup(
+      new autoscaling.AutoScalingGroup(
         sub, 'FckNatAsg', {
           instanceType: this.props.instanceType,
           machineImage,
@@ -155,11 +158,11 @@ export class FckNatInstanceProvider extends NatProvider implements IConnectable 
     }
   }
 
-  configureSubnet(subnet: PrivateSubnet): void {
+  configureSubnet(subnet: ec2.PrivateSubnet): void {
     const az = subnet.availabilityZone;
     const gatewayId = this.gateways.pick(az).ref;
     subnet.addRoute('DefaultRoute', {
-      routerType: RouterType.NETWORK_INTERFACE,
+      routerType: ec2.RouterType.NETWORK_INTERFACE,
       routerId: gatewayId,
       enablesInternetConnectivity: true,
     });
@@ -168,7 +171,7 @@ export class FckNatInstanceProvider extends NatProvider implements IConnectable 
   /**
    * The Security Group associated with the NAT instances
    */
-  public get securityGroup(): ISecurityGroup {
+  public get securityGroup(): ec2.ISecurityGroup {
     if (!this._securityGroup) {
       throw new Error('Pass the NatInstanceProvider to a Vpc before accessing \'securityGroup\'');
     }
@@ -178,14 +181,14 @@ export class FckNatInstanceProvider extends NatProvider implements IConnectable 
   /**
    * Manage the Security Groups associated with the NAT instances
    */
-  public get connections(): Connections {
+  public get connections(): ec2.Connections {
     if (!this._connections) {
       throw new Error('Pass the NatInstanceProvider to a Vpc before accessing \'connections\'');
     }
     return this._connections;
   }
 
-  public get configuredGateways(): GatewayConfig[] {
+  public get configuredGateways(): ec2.GatewayConfig[] {
     return this.gateways.values().map(x => ({ az: x[0], gatewayId: x[1].ref }));
   }
 }

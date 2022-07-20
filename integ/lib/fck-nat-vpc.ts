@@ -1,41 +1,40 @@
 /* eslint-disable no-new */
 
-import * as cdk from '@aws-cdk/core'
-import { BastionHostLinux, IConnectable, NatProvider, Peer, Port, SubnetConfiguration, SubnetType, Vpc } from '@aws-cdk/aws-ec2'
-import { Tags } from '@aws-cdk/core'
+import { Construct } from "constructs"
+import { Tags, StackProps, aws_ec2 as ec2 } from "aws-cdk-lib"
 
-interface FckNatVpcProps extends cdk.StackProps {
-  readonly natInstanceProvider: NatProvider & IConnectable
+interface FckNatVpcProps extends StackProps {
+  readonly natInstanceProvider: ec2.NatProvider & ec2.IConnectable
 }
 
-export class FckNatVpc extends cdk.Construct {
-  vpc: Vpc
+export class FckNatVpc extends Construct {
+  vpc: ec2.Vpc
 
-  constructor (scope: cdk.Construct, id: string, props: FckNatVpcProps) {
+  constructor (scope: Construct, id: string, props: FckNatVpcProps) {
     super(scope, id)
 
-    const publicSubnetCfg: SubnetConfiguration = {
+    const publicSubnetCfg: ec2.SubnetConfiguration = {
       name: 'public-subnet',
-      subnetType: SubnetType.PUBLIC,
+      subnetType: ec2.SubnetType.PUBLIC,
       cidrMask: 24,
       reserved: false
     }
-    const privateSubnetCfg: SubnetConfiguration = {
+    const privateSubnetCfg: ec2.SubnetConfiguration = {
       name: 'private-subnet',
-      subnetType: SubnetType.PRIVATE_WITH_NAT,
+      subnetType: ec2.SubnetType.PRIVATE_WITH_NAT,
       cidrMask: 24,
       reserved: false
     }
 
-    this.vpc = new Vpc(this, 'vpc', {
+    this.vpc = new ec2.Vpc(this, 'vpc', {
       maxAzs: 1,
       subnetConfiguration: [publicSubnetCfg, privateSubnetCfg],
       natGatewayProvider: props.natInstanceProvider
     })
 
-    props.natInstanceProvider.connections.allowFrom(Peer.ipv4(this.vpc.vpcCidrBlock), Port.allTraffic())
+    props.natInstanceProvider.connections.allowFrom(ec2.Peer.ipv4(this.vpc.vpcCidrBlock), ec2.Port.allTraffic())
 
-    const bastion = new BastionHostLinux(this, 'BastionHost', {
+    const bastion = new ec2.BastionHostLinux(this, 'BastionHost', {
       vpc: this.vpc
     })
 
