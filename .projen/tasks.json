@@ -190,7 +190,8 @@
       "name": "release:release",
       "description": "Prepare a release from \"release\" branch",
       "env": {
-        "RELEASE": "true"
+        "RELEASE": "true",
+        "MAJOR": "1"
       },
       "steps": [
         {
