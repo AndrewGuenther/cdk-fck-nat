@@ -106,7 +106,7 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
       inlinePolicies: {
         attachNatEniPolicy: new iam.PolicyDocument({
           statements: [new iam.PolicyStatement({
-            actions: ['ec2:AttachNetworkInterface'],
+            actions: ['ec2:AttachNetworkInterface', 'ec2:ModifyNetworkInterfaceAttribute'],
             resources: ['*'],
           })],
         }),
@@ -121,15 +121,6 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
           groupSet: [this._securityGroup.securityGroupId],
         },
       );
-
-      const eip = new ec2.CfnEIP(sub, 'Eip', {
-        domain: 'vpc',
-      });
-
-      new ec2.CfnEIPAssociation(sub, 'EipAssociation', {
-        allocationId: eip.attrAllocationId,
-        networkInterfaceId: networkInterface.ref,
-      });
 
       const userData = ec2.UserData.forLinux();
       userData.addCommands(`echo "eni_id=${networkInterface.ref}" >> /etc/fck-nat.conf`);
