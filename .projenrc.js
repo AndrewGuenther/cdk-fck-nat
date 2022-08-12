@@ -1,26 +1,37 @@
 const { awscdk } = require('projen');
 const project = new awscdk.AwsCdkConstructLibrary({
+  name: 'cdk-fck-nat',
+  license: 'MIT',
   author: 'Andrew Guenther',
   authorAddress: 'guenther.andrew.j@gmail.com',
-  cdkVersion: '2.33.0',
-  defaultReleaseBranch: 'release',
-  name: 'fck-nat-cdk',
-  license: 'MIT',
   repositoryUrl: 'https://github.com/AndrewGuenther/cdk-fck-nat.git',
   description: 'A NAT Gateway instance construct built on the fck-nat AMI.',
+
+  cdkVersion: '2.33.0',
   devDeps: ['dotenv'],
-  packageName: 'cdk-fck-nat',
   autoApproveUpgrades: true,
   autoApproveOptions: {
     label: 'auto-approve',
   },
+
   buildWorkflow: true,
+  buildWorkflowTriggers: {
+    pullRequest: {},
+    workflowDispatch: {},
+    push: {
+      branches: ['main'],
+    },
+  },
+
   release: true,
-  gitignore: ['.env', 'cdk.context.json', 'cdk.out'],
+  defaultReleaseBranch: 'release',
+  packageName: 'cdk-fck-nat',
   publishToPypi: {
     distName: 'cdk-fck-nat',
     module: 'cdk_fck_nat',
   },
+
+  gitignore: ['.env', 'cdk.context.json', 'cdk.out'],
 });
 
 project.synth();

@@ -1,6 +1,6 @@
 # CDK fck-nat
 
-A CDK construct for deploying NAT Instances using [fck-nat](https://github.com/AndrewGuenther/fck-nat) The (f)easible (c)ost (k)onfigurable NAT!
+A CDK construct for deploying NAT Instances using [fck-nat](https://github.com/AndrewGuenther/fck-nat). The (f)easible (c)ost (k)onfigurable NAT!
 
 * Overpaying for AWS Managed NAT Gateways? fck-nat.
 * Want to use NAT instances and stay up-to-date with the latest security patches? fck-nat.
