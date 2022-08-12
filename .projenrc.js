@@ -3,19 +3,24 @@ const project = new awscdk.AwsCdkConstructLibrary({
   author: 'Andrew Guenther',
   authorAddress: 'guenther.andrew.j@gmail.com',
   cdkVersion: '2.33.0',
-  defaultReleaseBranch: 'main',
+  defaultReleaseBranch: 'release',
   name: 'fck-nat-cdk',
-  repositoryUrl: 'https://github.com/AndrewGuenther/fck-nat-cdk.git',
-
-  // cdkTestDependencies: undefined,  /* AWS CDK modules required for testing. */
-  // deps: [],                        /* Runtime dependencies of this module. */
-  // description: undefined,          /* The description is just a string that helps people understand the purpose of the package. */
-  devDeps: ['dotenv'], /* Build dependencies for this module. */
-  packageName: 'fck-nat-cdk', /* The "name" in package.json. */
-  // release: undefined,              /* Add release management to this project. */
+  license: 'MIT',
+  repositoryUrl: 'https://github.com/AndrewGuenther/cdk-fck-nat.git',
+  description: 'A NAT Gateway instance construct built on the fck-nat AMI.',
+  devDeps: ['dotenv'],
+  packageName: 'cdk-fck-nat',
+  autoApproveUpgrades: true,
+  autoApproveOptions: {
+    label: 'auto-approve',
+  },
+  buildWorkflow: true,
+  release: true,
+  gitignore: ['.env', 'cdk.context.json', 'cdk.out'],
+  publishToPypi: {
+    distName: 'cdk-fck-nat',
+    module: 'cdk_fck_nat',
+  },
 });
-project.addGitIgnore('.env');
-project.addGitIgnore('cdk.context.json');
-project.addGitIgnore('cdk.out');
 
 project.synth();

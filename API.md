@@ -3,14 +3,14 @@
 
 ## Structs <a name="Structs" id="Structs"></a>
 
-### FckNatInstanceProps <a name="FckNatInstanceProps" id="fck-nat-cdk.FckNatInstanceProps"></a>
+### FckNatInstanceProps <a name="FckNatInstanceProps" id="cdk-fck-nat.FckNatInstanceProps"></a>
 
 Properties for a fck-nat instance.
 
-#### Initializer <a name="Initializer" id="fck-nat-cdk.FckNatInstanceProps.Initializer"></a>
+#### Initializer <a name="Initializer" id="cdk-fck-nat.FckNatInstanceProps.Initializer"></a>
 
 ```typescript
-import { FckNatInstanceProps } from 'fck-nat-cdk'
+import { FckNatInstanceProps } from 'cdk-fck-nat'
 
 const fckNatInstanceProps: FckNatInstanceProps = { ... }
 ```
@@ -19,14 +19,14 @@ const fckNatInstanceProps: FckNatInstanceProps = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProps.property.instanceType">instanceType</a></code> | <code>aws-cdk-lib.aws_ec2.InstanceType</code> | Instance type of the fck-nat instance. |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProps.property.keyName">keyName</a></code> | <code>string</code> | Name of SSH keypair to grant access to instance. |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProps.property.machineImage">machineImage</a></code> | <code>aws-cdk-lib.aws_ec2.IMachineImage</code> | The machine image (AMI) to use. |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProps.property.securityGroup">securityGroup</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup</code> | Security Group for fck-nat instances. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.instanceType">instanceType</a></code> | <code>aws-cdk-lib.aws_ec2.InstanceType</code> | Instance type of the fck-nat instance. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.keyName">keyName</a></code> | <code>string</code> | Name of SSH keypair to grant access to instance. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.machineImage">machineImage</a></code> | <code>aws-cdk-lib.aws_ec2.IMachineImage</code> | The machine image (AMI) to use. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.securityGroup">securityGroup</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup</code> | Security Group for fck-nat instances. |
 
 ---
 
-##### `instanceType`<sup>Required</sup> <a name="instanceType" id="fck-nat-cdk.FckNatInstanceProps.property.instanceType"></a>
+##### `instanceType`<sup>Required</sup> <a name="instanceType" id="cdk-fck-nat.FckNatInstanceProps.property.instanceType"></a>
 
 ```typescript
 public readonly instanceType: InstanceType;
@@ -38,7 +38,7 @@ Instance type of the fck-nat instance.
 
 ---
 
-##### `keyName`<sup>Optional</sup> <a name="keyName" id="fck-nat-cdk.FckNatInstanceProps.property.keyName"></a>
+##### `keyName`<sup>Optional</sup> <a name="keyName" id="cdk-fck-nat.FckNatInstanceProps.property.keyName"></a>
 
 ```typescript
 public readonly keyName: string;
@@ -51,7 +51,7 @@ Name of SSH keypair to grant access to instance.
 
 ---
 
-##### `machineImage`<sup>Optional</sup> <a name="machineImage" id="fck-nat-cdk.FckNatInstanceProps.property.machineImage"></a>
+##### `machineImage`<sup>Optional</sup> <a name="machineImage" id="cdk-fck-nat.FckNatInstanceProps.property.machineImage"></a>
 
 ```typescript
 public readonly machineImage: IMachineImage;
@@ -78,7 +78,7 @@ FckNatInstanceProvider({
 
 ---
 
-##### `securityGroup`<sup>Optional</sup> <a name="securityGroup" id="fck-nat-cdk.FckNatInstanceProps.property.securityGroup"></a>
+##### `securityGroup`<sup>Optional</sup> <a name="securityGroup" id="cdk-fck-nat.FckNatInstanceProps.property.securityGroup"></a>
 
 ```typescript
 public readonly securityGroup: ISecurityGroup;
@@ -93,27 +93,27 @@ Security Group for fck-nat instances.
 
 ## Classes <a name="Classes" id="Classes"></a>
 
-### FckNatInstanceProvider <a name="FckNatInstanceProvider" id="fck-nat-cdk.FckNatInstanceProvider"></a>
+### FckNatInstanceProvider <a name="FckNatInstanceProvider" id="cdk-fck-nat.FckNatInstanceProvider"></a>
 
 - *Implements:* aws-cdk-lib.aws_ec2.IConnectable
 
-#### Initializers <a name="Initializers" id="fck-nat-cdk.FckNatInstanceProvider.Initializer"></a>
+#### Initializers <a name="Initializers" id="cdk-fck-nat.FckNatInstanceProvider.Initializer"></a>
 
 ```typescript
-import { FckNatInstanceProvider } from 'fck-nat-cdk'
+import { FckNatInstanceProvider } from 'cdk-fck-nat'
 
 new FckNatInstanceProvider(props: FckNatInstanceProps)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProvider.Initializer.parameter.props">props</a></code> | <code><a href="#fck-nat-cdk.FckNatInstanceProps">FckNatInstanceProps</a></code> | *No description.* |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProvider.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-fck-nat.FckNatInstanceProps">FckNatInstanceProps</a></code> | *No description.* |
 
 ---
 
-##### `props`<sup>Required</sup> <a name="props" id="fck-nat-cdk.FckNatInstanceProvider.Initializer.parameter.props"></a>
+##### `props`<sup>Required</sup> <a name="props" id="cdk-fck-nat.FckNatInstanceProvider.Initializer.parameter.props"></a>
 
-- *Type:* <a href="#fck-nat-cdk.FckNatInstanceProps">FckNatInstanceProps</a>
+- *Type:* <a href="#cdk-fck-nat.FckNatInstanceProps">FckNatInstanceProps</a>
 
 ---
 
@@ -121,12 +121,12 @@ new FckNatInstanceProvider(props: FckNatInstanceProps)
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProvider.configureNat">configureNat</a></code> | Called by the VPC to configure NAT. |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProvider.configureSubnet">configureSubnet</a></code> | Configures subnet with the gateway. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProvider.configureNat">configureNat</a></code> | Called by the VPC to configure NAT. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProvider.configureSubnet">configureSubnet</a></code> | Configures subnet with the gateway. |
 
 ---
 
-##### `configureNat` <a name="configureNat" id="fck-nat-cdk.FckNatInstanceProvider.configureNat"></a>
+##### `configureNat` <a name="configureNat" id="cdk-fck-nat.FckNatInstanceProvider.configureNat"></a>
 
 ```typescript
 public configureNat(options: ConfigureNatOptions): void
@@ -136,13 +136,13 @@ Called by the VPC to configure NAT.
 
 Don't call this directly, the VPC will call it automatically.
 
-###### `options`<sup>Required</sup> <a name="options" id="fck-nat-cdk.FckNatInstanceProvider.configureNat.parameter.options"></a>
+###### `options`<sup>Required</sup> <a name="options" id="cdk-fck-nat.FckNatInstanceProvider.configureNat.parameter.options"></a>
 
 - *Type:* aws-cdk-lib.aws_ec2.ConfigureNatOptions
 
 ---
 
-##### `configureSubnet` <a name="configureSubnet" id="fck-nat-cdk.FckNatInstanceProvider.configureSubnet"></a>
+##### `configureSubnet` <a name="configureSubnet" id="cdk-fck-nat.FckNatInstanceProvider.configureSubnet"></a>
 
 ```typescript
 public configureSubnet(subnet: PrivateSubnet): void
@@ -152,7 +152,7 @@ Configures subnet with the gateway.
 
 Don't call this directly, the VPC will call it automatically.
 
-###### `subnet`<sup>Required</sup> <a name="subnet" id="fck-nat-cdk.FckNatInstanceProvider.configureSubnet.parameter.subnet"></a>
+###### `subnet`<sup>Required</sup> <a name="subnet" id="cdk-fck-nat.FckNatInstanceProvider.configureSubnet.parameter.subnet"></a>
 
 - *Type:* aws-cdk-lib.aws_ec2.PrivateSubnet
 
@@ -162,15 +162,15 @@ Don't call this directly, the VPC will call it automatically.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProvider.gateway">gateway</a></code> | Use NAT Gateways to provide NAT services for your VPC. |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProvider.instance">instance</a></code> | Use NAT instances to provide NAT services for your VPC. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProvider.gateway">gateway</a></code> | Use NAT Gateways to provide NAT services for your VPC. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProvider.instance">instance</a></code> | Use NAT instances to provide NAT services for your VPC. |
 
 ---
 
-##### `gateway` <a name="gateway" id="fck-nat-cdk.FckNatInstanceProvider.gateway"></a>
+##### `gateway` <a name="gateway" id="cdk-fck-nat.FckNatInstanceProvider.gateway"></a>
 
 ```typescript
-import { FckNatInstanceProvider } from 'fck-nat-cdk'
+import { FckNatInstanceProvider } from 'cdk-fck-nat'
 
 FckNatInstanceProvider.gateway(props?: NatGatewayProps)
 ```
@@ -181,16 +181,16 @@ NAT gateways are managed by AWS.
 
 > [https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html)
 
-###### `props`<sup>Optional</sup> <a name="props" id="fck-nat-cdk.FckNatInstanceProvider.gateway.parameter.props"></a>
+###### `props`<sup>Optional</sup> <a name="props" id="cdk-fck-nat.FckNatInstanceProvider.gateway.parameter.props"></a>
 
 - *Type:* aws-cdk-lib.aws_ec2.NatGatewayProps
 
 ---
 
-##### `instance` <a name="instance" id="fck-nat-cdk.FckNatInstanceProvider.instance"></a>
+##### `instance` <a name="instance" id="cdk-fck-nat.FckNatInstanceProvider.instance"></a>
 
 ```typescript
-import { FckNatInstanceProvider } from 'fck-nat-cdk'
+import { FckNatInstanceProvider } from 'cdk-fck-nat'
 
 FckNatInstanceProvider.instance(props: NatInstanceProps)
 ```
@@ -205,7 +205,7 @@ your own NatProvider based on AutoScaling groups if you need that.
 
 > [https://docs.aws.amazon.com/vpc/latest/userguide/VPC_NAT_Instance.html](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_NAT_Instance.html)
 
-###### `props`<sup>Required</sup> <a name="props" id="fck-nat-cdk.FckNatInstanceProvider.instance.parameter.props"></a>
+###### `props`<sup>Required</sup> <a name="props" id="cdk-fck-nat.FckNatInstanceProvider.instance.parameter.props"></a>
 
 - *Type:* aws-cdk-lib.aws_ec2.NatInstanceProps
 
@@ -215,13 +215,13 @@ your own NatProvider based on AutoScaling groups if you need that.
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProvider.property.configuredGateways">configuredGateways</a></code> | <code>aws-cdk-lib.aws_ec2.GatewayConfig[]</code> | Return list of gateways spawned by the provider. |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProvider.property.connections">connections</a></code> | <code>aws-cdk-lib.aws_ec2.Connections</code> | Manage the Security Groups associated with the NAT instances. |
-| <code><a href="#fck-nat-cdk.FckNatInstanceProvider.property.securityGroup">securityGroup</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup</code> | The Security Group associated with the NAT instances. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProvider.property.configuredGateways">configuredGateways</a></code> | <code>aws-cdk-lib.aws_ec2.GatewayConfig[]</code> | Return list of gateways spawned by the provider. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProvider.property.connections">connections</a></code> | <code>aws-cdk-lib.aws_ec2.Connections</code> | Manage the Security Groups associated with the NAT instances. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProvider.property.securityGroup">securityGroup</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup</code> | The Security Group associated with the NAT instances. |
 
 ---
 
-##### `configuredGateways`<sup>Required</sup> <a name="configuredGateways" id="fck-nat-cdk.FckNatInstanceProvider.property.configuredGateways"></a>
+##### `configuredGateways`<sup>Required</sup> <a name="configuredGateways" id="cdk-fck-nat.FckNatInstanceProvider.property.configuredGateways"></a>
 
 ```typescript
 public readonly configuredGateways: GatewayConfig[];
@@ -233,7 +233,7 @@ Return list of gateways spawned by the provider.
 
 ---
 
-##### `connections`<sup>Required</sup> <a name="connections" id="fck-nat-cdk.FckNatInstanceProvider.property.connections"></a>
+##### `connections`<sup>Required</sup> <a name="connections" id="cdk-fck-nat.FckNatInstanceProvider.property.connections"></a>
 
 ```typescript
 public readonly connections: Connections;
@@ -245,7 +245,7 @@ Manage the Security Groups associated with the NAT instances.
 
 ---
 
-##### `securityGroup`<sup>Required</sup> <a name="securityGroup" id="fck-nat-cdk.FckNatInstanceProvider.property.securityGroup"></a>
+##### `securityGroup`<sup>Required</sup> <a name="securityGroup" id="cdk-fck-nat.FckNatInstanceProvider.property.securityGroup"></a>
 
 ```typescript
 public readonly securityGroup: ISecurityGroup;

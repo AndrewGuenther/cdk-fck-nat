@@ -1,8 +1,9 @@
 {
-  "name": "fck-nat-cdk",
+  "name": "cdk-fck-nat",
+  "description": "A NAT Gateway instance construct built on the fck-nat AMI.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AndrewGuenther/fck-nat-cdk.git"
+    "url": "https://github.com/AndrewGuenther/cdk-fck-nat.git"
   },
   "scripts": {
     "build": "npx projen build",
@@ -17,10 +18,11 @@
     "package": "npx projen package",
     "package-all": "npx projen package-all",
     "package:js": "npx projen package:js",
+    "package:python": "npx projen package:python",
     "post-compile": "npx projen post-compile",
     "post-upgrade": "npx projen post-upgrade",
     "pre-compile": "npx projen pre-compile",
-    "release": "npx projen release",
+    "release:release": "npx projen release:release",
     "test": "npx projen test",
     "test:update": "npx projen test:update",
     "test:watch": "npx projen test:watch",
@@ -67,7 +69,7 @@
     "cdk"
   ],
   "main": "lib/index.js",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "version": "0.0.0",
   "jest": {
     "testMatch": [
@@ -113,7 +115,12 @@
   "stability": "stable",
   "jsii": {
     "outdir": "dist",
-    "targets": {},
+    "targets": {
+      "python": {
+        "distName": "cdk-fck-nat",
+        "module": "cdk_fck_nat"
+      }
+    },
     "tsc": {
       "outDir": "lib",
       "rootDir": "src"
