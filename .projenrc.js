@@ -10,22 +10,15 @@ const project = new awscdk.AwsCdkConstructLibrary({
 
   cdkVersion: '2.33.0',
   devDeps: ['dotenv'],
+
+  dependabot: true,
   autoApproveUpgrades: true,
   autoApproveOptions: {
-    label: 'auto-approve',
+    allowedUsernames: ['dependabot[bot]'],
   },
 
-  buildWorkflow: true,
-  buildWorkflowTriggers: {
-    pullRequest: {},
-    workflowDispatch: {},
-    push: {
-      branches: ['main'],
-    },
-  },
+  defaultReleaseBranch: 'main',
 
-  release: true,
-  defaultReleaseBranch: 'release',
   packageName: 'cdk-fck-nat',
   publishToPypi: {
     distName: 'cdk-fck-nat',
