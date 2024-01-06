@@ -3,6 +3,8 @@ import {
   aws_autoscaling as autoscaling,
   aws_ec2 as ec2,
 } from 'aws-cdk-lib';
+import { UpdatePolicy } from 'aws-cdk-lib/aws-autoscaling';
+import { LaunchTemplate, SpotRequestType } from 'aws-cdk-lib/aws-ec2';
 
 /**
  * Preferential set
@@ -63,6 +65,11 @@ export interface FckNatInstanceProps {
    * Instance type of the fck-nat instance
    */
   readonly instanceType: ec2.InstanceType;
+
+  /**
+   * Use Spot instances for your fck-nat instance
+   */
+  readonly spotInstances?: boolean;
 
   /**
    * Name of SSH keypair to grant access to instance
@@ -128,15 +135,22 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
 
       new autoscaling.AutoScalingGroup(
         sub, 'FckNatAsg', {
-          instanceType: this.props.instanceType,
-          machineImage,
           vpc: options.vpc,
           vpcSubnets: { subnets: [sub] },
-          securityGroup: this._securityGroup,
-          role,
           desiredCapacity: 1,
-          userData: userData,
           keyName: this.props.keyName,
+          launchTemplate: new LaunchTemplate(sub, 'lt', {
+            instanceType: this.props.instanceType,
+            machineImage,
+            securityGroup: this._securityGroup,
+            role,
+            userData: userData,
+            keyName: this.props.keyName,
+            spotOptions: this.props.spotInstances ? {
+              requestType: SpotRequestType.ONE_TIME,
+            } : undefined,
+          }),
+          updatePolicy: UpdatePolicy.rollingUpdate(),
         },
       );
       // NAT instance routes all traffic, both ways

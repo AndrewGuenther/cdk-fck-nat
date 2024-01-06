@@ -8,7 +8,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   description: 'A NAT Gateway instance construct built on the fck-nat AMI.',
   majorVersion: 1,
 
-  cdkVersion: '2.33.0',
+  cdkVersion: '2.96.2',
   devDeps: ['dotenv'],
 
   dependabot: true,

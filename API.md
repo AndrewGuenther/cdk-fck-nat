@@ -23,6 +23,7 @@ const fckNatInstanceProps: FckNatInstanceProps = { ... }
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.keyName">keyName</a></code> | <code>string</code> | Name of SSH keypair to grant access to instance. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.machineImage">machineImage</a></code> | <code>aws-cdk-lib.aws_ec2.IMachineImage</code> | The machine image (AMI) to use. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.securityGroup">securityGroup</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup</code> | Security Group for fck-nat instances. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.spotInstances">spotInstances</a></code> | <code>boolean</code> | Use Spot instances for your fck-nat instance. |
 
 ---
 
@@ -88,6 +89,18 @@ public readonly securityGroup: ISecurityGroup;
 - *Default:* A new security group will be created
 
 Security Group for fck-nat instances.
+
+---
+
+##### `spotInstances`<sup>Optional</sup> <a name="spotInstances" id="cdk-fck-nat.FckNatInstanceProps.property.spotInstances"></a>
+
+```typescript
+public readonly spotInstances: boolean;
+```
+
+- *Type:* boolean
+
+Use Spot instances for your fck-nat instance.
 
 ---
 
