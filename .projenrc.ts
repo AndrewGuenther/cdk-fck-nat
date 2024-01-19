@@ -29,6 +29,8 @@ const project = new awscdk.AwsCdkConstructLibrary({
   gitignore: ['.env', 'cdk.context.json', 'cdk.out'],
 
   projenrcTs: true,
+  jsiiVersion: '~5.3',
+  typescriptVersion: '~5.3',
 });
 
 project.synth();
