@@ -1,4 +1,4 @@
-import { awscdk } from 'projen'
+import { awscdk } from 'projen';
 
 const project = new awscdk.AwsCdkConstructLibrary({
   name: 'cdk-fck-nat',
