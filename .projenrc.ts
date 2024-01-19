@@ -1,4 +1,5 @@
-const { awscdk } = require('projen');
+import { awscdk } from 'projen'
+
 const project = new awscdk.AwsCdkConstructLibrary({
   name: 'cdk-fck-nat',
   license: 'MIT',
@@ -8,7 +9,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   description: 'A NAT Gateway instance construct built on the fck-nat AMI.',
   majorVersion: 1,
 
-  cdkVersion: '2.33.0',
+  cdkVersion: '2.122.0',
   devDeps: ['dotenv'],
 
   dependabot: true,
@@ -26,6 +27,8 @@ const project = new awscdk.AwsCdkConstructLibrary({
   },
 
   gitignore: ['.env', 'cdk.context.json', 'cdk.out'],
+
+  projenrcTs: true,
 });
 
 project.synth();
