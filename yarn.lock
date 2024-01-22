@@ -3594,9 +3594,9 @@ jsii-rosetta@^1.80.0, jsii-rosetta@^1.94.0:
     yargs "^16.2.0"
 
 jsii-rosetta@~5.3:
-  version "5.3.4"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.3.4.tgz#108cc718c7d87a3b5552c971021a5c717b7219dd"
-  integrity sha512-/IwnsZZlQaN8l8GdH0HIJE5HV6bPONxz4PrREd+dGNxBR2qF4GTWeUugxsnLugo5sTKx2AeS5Gi5IeWVRUaRsA==
+  version "5.3.8"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.3.8.tgz#32008f7e2379c0ce942f902cc1d8bc60f73eca9b"
+  integrity sha512-Ym/gl48grorJrl/FnGp7jG9uxceCK86dnZxRJVh7Mj8coMnAjEoWQoYyr43WtTdHCnnodpBf3iNSmmZH4tYA9Q==
   dependencies:
     "@jsii/check-node" "1.94.0"
     "@jsii/spec" "^1.94.0"
