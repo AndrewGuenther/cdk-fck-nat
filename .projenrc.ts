@@ -8,7 +8,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   authorAddress: 'guenther.andrew.j@gmail.com',
   repositoryUrl: 'https://github.com/AndrewGuenther/cdk-fck-nat.git',
   description: 'A NAT Gateway instance construct built on the fck-nat AMI.',
-  majorVersion: 1.2,
+  majorVersion: 1.3,
 
   cdkVersion: '2.122.0',
   devDeps: ['dotenv'],
