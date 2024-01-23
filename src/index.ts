@@ -156,8 +156,8 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
           groupMetrics: [autoscaling.GroupMetrics.all()],
         },
       );
-      this._autoScalingGroups.push(autoScalingGroup)
-      Annotations.of(autoScalingGroup).acknowledgeWarning('@aws-cdk/aws-autoscaling:desiredCapacitySet')
+      this._autoScalingGroups.push(autoScalingGroup);
+      Annotations.of(autoScalingGroup).acknowledgeWarning('@aws-cdk/aws-autoscaling:desiredCapacitySet');
       // NAT instance routes all traffic, both ways
       this.gateways.add(sub.availabilityZone, networkInterface);
     }
