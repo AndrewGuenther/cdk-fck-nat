@@ -21,7 +21,7 @@ export class FckNatVpc extends Construct {
     }
     const privateSubnetCfg: ec2.SubnetConfiguration = {
       name: 'private-subnet',
-      subnetType: ec2.SubnetType.PRIVATE_WITH_NAT,
+      subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
       cidrMask: 24,
       reserved: false
     }

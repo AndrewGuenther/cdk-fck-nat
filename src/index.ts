@@ -80,6 +80,18 @@ export interface FckNatInstanceProps {
 }
 
 export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConnectable {
+  /**
+   * The AMI name used internally when calling `LookupMachineImage`. Can be referenced if you wish to do AMI lookups
+   * externally.
+   */
+  public static readonly AMI_NAME = 'fck-nat-amzn2-*-arm64-ebs';
+
+  /**
+   * The AMI owner used internally when calling `LookupMachineImage`. Can be referenced if you wish to do AMI lookups
+   * externally.
+   */
+  public static readonly AMI_OWNER = '568608671756';
+
   private gateways: PrefSet<ec2.CfnNetworkInterface> = new PrefSet<ec2.CfnNetworkInterface>();
   private _securityGroup?: ec2.ISecurityGroup;
   private _connections?: ec2.Connections;
@@ -91,8 +103,8 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
   configureNat(options: ec2.ConfigureNatOptions): void {
     // Create the NAT instances. They can share a security group and a Role.
     const machineImage = this.props.machineImage || new ec2.LookupMachineImage({
-      name: 'fck-nat-amzn2-*-arm64-ebs',
-      owners: ['568608671756'],
+      name: FckNatInstanceProvider.AMI_NAME,
+      owners: [FckNatInstanceProvider.AMI_OWNER],
     });
     this._securityGroup = this.props.securityGroup ?? new ec2.SecurityGroup(options.vpc, 'NatSecurityGroup', {
       vpc: options.vpc,

@@ -293,5 +293,43 @@ The Security Group associated with the NAT instances.
 
 ---
 
+#### Constants <a name="Constants" id="Constants"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProvider.property.AMI_NAME">AMI_NAME</a></code> | <code>string</code> | The AMI name used internally when calling `LookupMachineImage`. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProvider.property.AMI_OWNER">AMI_OWNER</a></code> | <code>string</code> | The AMI owner used internally when calling `LookupMachineImage`. |
+
+---
+
+##### `AMI_NAME`<sup>Required</sup> <a name="AMI_NAME" id="cdk-fck-nat.FckNatInstanceProvider.property.AMI_NAME"></a>
+
+```typescript
+public readonly AMI_NAME: string;
+```
+
+- *Type:* string
+
+The AMI name used internally when calling `LookupMachineImage`.
+
+Can be referenced if you wish to do AMI lookups
+externally.
+
+---
+
+##### `AMI_OWNER`<sup>Required</sup> <a name="AMI_OWNER" id="cdk-fck-nat.FckNatInstanceProvider.property.AMI_OWNER"></a>
+
+```typescript
+public readonly AMI_OWNER: string;
+```
+
+- *Type:* string
+
+The AMI owner used internally when calling `LookupMachineImage`.
+
+Can be referenced if you wish to do AMI lookups
+externally.
+
+---
 
 
