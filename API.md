@@ -252,7 +252,9 @@ your own NatProvider based on AutoScaling groups if you need that.
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProvider.property.configuredGateways">configuredGateways</a></code> | <code>aws-cdk-lib.aws_ec2.GatewayConfig[]</code> | Return list of gateways spawned by the provider. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProvider.property.autoScalingGroups">autoScalingGroups</a></code> | <code>aws-cdk-lib.aws_autoscaling.AutoScalingGroup[]</code> | The ASGs (Auto Scaling Groups) managing the NAT instances. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProvider.property.connections">connections</a></code> | <code>aws-cdk-lib.aws_ec2.Connections</code> | Manage the Security Groups associated with the NAT instances. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProvider.property.role">role</a></code> | <code>aws-cdk-lib.aws_iam.Role</code> | The instance role attached with the NAT instances. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProvider.property.securityGroup">securityGroup</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup</code> | The Security Group associated with the NAT instances. |
 
 ---
@@ -269,6 +271,20 @@ Return list of gateways spawned by the provider.
 
 ---
 
+##### `autoScalingGroups`<sup>Required</sup> <a name="autoScalingGroups" id="cdk-fck-nat.FckNatInstanceProvider.property.autoScalingGroups"></a>
+
+```typescript
+public readonly autoScalingGroups: AutoScalingGroup[];
+```
+
+- *Type:* aws-cdk-lib.aws_autoscaling.AutoScalingGroup[]
+
+The ASGs (Auto Scaling Groups) managing the NAT instances.
+
+These can be retrieved to get metrics and
+
+---
+
 ##### `connections`<sup>Required</sup> <a name="connections" id="cdk-fck-nat.FckNatInstanceProvider.property.connections"></a>
 
 ```typescript
@@ -278,6 +294,18 @@ public readonly connections: Connections;
 - *Type:* aws-cdk-lib.aws_ec2.Connections
 
 Manage the Security Groups associated with the NAT instances.
+
+---
+
+##### `role`<sup>Required</sup> <a name="role" id="cdk-fck-nat.FckNatInstanceProvider.property.role"></a>
+
+```typescript
+public readonly role: Role;
+```
+
+- *Type:* aws-cdk-lib.aws_iam.Role
+
+The instance role attached with the NAT instances.
 
 ---
 
