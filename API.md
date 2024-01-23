@@ -56,6 +56,8 @@ const fckNatInstanceProps: FckNatInstanceProps = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.instanceType">instanceType</a></code> | <code>aws-cdk-lib.aws_ec2.InstanceType</code> | Instance type of the fck-nat instance. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.eipPool">eipPool</a></code> | <code>string[]</code> | A list of EIP allocation IDs which can be attached to NAT instances. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.enableSsm">enableSsm</a></code> | <code>boolean</code> | Add necessary role permissions for SSM automatically. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.keyName">keyName</a></code> | <code>string</code> | Name of SSH keypair to grant access to instance. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.machineImage">machineImage</a></code> | <code>aws-cdk-lib.aws_ec2.IMachineImage</code> | The machine image (AMI) to use. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.securityGroup">securityGroup</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup</code> | Security Group for fck-nat instances. |
@@ -71,6 +73,34 @@ public readonly instanceType: InstanceType;
 - *Type:* aws-cdk-lib.aws_ec2.InstanceType
 
 Instance type of the fck-nat instance.
+
+---
+
+##### `eipPool`<sup>Optional</sup> <a name="eipPool" id="cdk-fck-nat.FckNatInstanceProps.property.eipPool"></a>
+
+```typescript
+public readonly eipPool: string[];
+```
+
+- *Type:* string[]
+
+A list of EIP allocation IDs which can be attached to NAT instances.
+
+The number of allocations supplied must be
+greater than or equal to the number of egress subnets in your VPC.
+
+---
+
+##### `enableSsm`<sup>Optional</sup> <a name="enableSsm" id="cdk-fck-nat.FckNatInstanceProps.property.enableSsm"></a>
+
+```typescript
+public readonly enableSsm: boolean;
+```
+
+- *Type:* boolean
+- *Default:* SSM is enabled
+
+Add necessary role permissions for SSM automatically.
 
 ---
 

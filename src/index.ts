@@ -79,6 +79,12 @@ export interface FckNatInstanceProps {
   readonly securityGroup?: ec2.ISecurityGroup;
 
   /**
+   * A list of EIP allocation IDs which can be attached to NAT instances. The number of allocations supplied must be
+   * greater than or equal to the number of egress subnets in your VPC.
+   */
+  readonly eipPool?: string[];
+
+  /**
    * Add necessary role permissions for SSM automatically
    *
    * @default - SSM is enabled
@@ -110,6 +116,11 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
   }
 
   configureNat(options: ec2.ConfigureNatOptions): void {
+    if (this.props.eipPool && this.props.eipPool.length < options.natSubnets.length) {
+      throw new Error('If specifying an EIP pool, the size of the pool must be greater than or equal to the number ' +
+        'of egress subnets in the target VPC.');
+    }
+
     // Create the NAT instances. They can share a security group and a Role.
     const machineImage = this.props.machineImage || new ec2.LookupMachineImage({
       name: FckNatInstanceProvider.AMI_NAME,
@@ -135,10 +146,11 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
     });
 
     if (this.props.enableSsm === undefined || this.props.enableSsm) {
-      this._role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName("AmazonSSMManagedEC2InstanceDefaultPolicy"));
+      this._role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMManagedEC2InstanceDefaultPolicy'));
     }
 
     this._autoScalingGroups = [];
+    const eipPool = this.props.eipPool ? [...this.props.eipPool] : undefined;
     for (const sub of options.natSubnets) {
       const networkInterface = new ec2.CfnNetworkInterface(
         sub, 'FckNatInterface', {
@@ -150,6 +162,9 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
 
       const userData = ec2.UserData.forLinux();
       userData.addCommands(`echo "eni_id=${networkInterface.ref}" >> /etc/fck-nat.conf`);
+      if (eipPool) {
+        userData.addCommands(`echo "eip=${eipPool.pop()}" >> /etc/fck-nat.conf`);
+      }
       userData.addCommands('service fck-nat restart');
 
       this._autoScalingGroups.push(new autoscaling.AutoScalingGroup(
