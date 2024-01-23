@@ -91,6 +91,10 @@ export interface FckNatInstanceProps {
    * @default - SSM is enabled
    */
   readonly enableSsm?: boolean;
+
+  /**
+   * 
+   */
 }
 
 export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConnectable {
@@ -164,7 +168,7 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
       const userData = ec2.UserData.forLinux();
       userData.addCommands(`echo "eni_id=${networkInterface.ref}" >> /etc/fck-nat.conf`);
       if (eipPool) {
-        userData.addCommands(`echo "eip=${eipPool.pop()}" >> /etc/fck-nat.conf`);
+        userData.addCommands(`echo "eip_id=${eipPool.pop()}" >> /etc/fck-nat.conf`);
       }
       userData.addCommands('service fck-nat restart');
 
