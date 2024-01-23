@@ -77,6 +77,13 @@ export interface FckNatInstanceProps {
    * @default - A new security group will be created
    */
   readonly securityGroup?: ec2.ISecurityGroup;
+
+  /**
+   * Add necessary role permissions for SSM automatically
+   *
+   * @default - SSM is enabled
+   */
+  readonly enableSsm?: boolean;
 }
 
 export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConnectable {
@@ -126,6 +133,10 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
         }),
       },
     });
+
+    if (this.props.enableSsm === undefined || this.props.enableSsm) {
+      this._role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName("AmazonSSMManagedEC2InstanceDefaultPolicy"));
+    }
 
     this._autoScalingGroups = [];
     for (const sub of options.natSubnets) {
