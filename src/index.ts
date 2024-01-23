@@ -2,6 +2,7 @@ import {
   aws_iam as iam,
   aws_autoscaling as autoscaling,
   aws_ec2 as ec2,
+  Annotations,
 } from 'aws-cdk-lib';
 
 /**
@@ -167,7 +168,7 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
       }
       userData.addCommands('service fck-nat restart');
 
-      this._autoScalingGroups.push(new autoscaling.AutoScalingGroup(
+      const autoScalingGroup = new autoscaling.AutoScalingGroup(
         sub, 'FckNatAsg', {
           instanceType: this.props.instanceType,
           machineImage,
@@ -180,7 +181,9 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
           keyName: this.props.keyName,
           groupMetrics: [autoscaling.GroupMetrics.all()],
         },
-      ));
+      );
+      this._autoScalingGroups.push(autoScalingGroup);
+      Annotations.of(autoScalingGroup).acknowledgeWarning('@aws-cdk/aws-autoscaling:desiredCapacitySet');
       // NAT instance routes all traffic, both ways
       this.gateways.add(sub.availabilityZone, networkInterface);
     }
