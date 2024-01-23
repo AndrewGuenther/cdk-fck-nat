@@ -1,4 +1,5 @@
 import { awscdk } from 'projen';
+import { DependabotScheduleInterval } from 'projen/lib/github';
 
 const project = new awscdk.AwsCdkConstructLibrary({
   name: 'cdk-fck-nat',
@@ -7,12 +8,15 @@ const project = new awscdk.AwsCdkConstructLibrary({
   authorAddress: 'guenther.andrew.j@gmail.com',
   repositoryUrl: 'https://github.com/AndrewGuenther/cdk-fck-nat.git',
   description: 'A NAT Gateway instance construct built on the fck-nat AMI.',
-  majorVersion: 1,
+  majorVersion: 1.2,
 
   cdkVersion: '2.122.0',
   devDeps: ['dotenv'],
 
   dependabot: true,
+  dependabotOptions: {
+    scheduleInterval: DependabotScheduleInterval.MONTHLY,
+  },
   autoApproveUpgrades: true,
   autoApproveOptions: {
     allowedUsernames: ['dependabot[bot]'],

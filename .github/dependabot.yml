@@ -6,7 +6,7 @@ updates:
     versioning-strategy: lockfile-only
     directory: /
     schedule:
-      interval: daily
+      interval: monthly
     ignore:
       - dependency-name: projen
     labels:

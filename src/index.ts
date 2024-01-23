@@ -80,9 +80,23 @@ export interface FckNatInstanceProps {
 }
 
 export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConnectable {
+  /**
+   * The AMI name used internally when calling `LookupMachineImage`. Can be referenced if you wish to do AMI lookups
+   * externally.
+   */
+  public static readonly AMI_NAME = 'fck-nat-al2023-*-arm64-ebs';
+
+  /**
+   * The AMI owner used internally when calling `LookupMachineImage`. Can be referenced if you wish to do AMI lookups
+   * externally.
+   */
+  public static readonly AMI_OWNER = '568608671756';
+
   private gateways: PrefSet<ec2.CfnNetworkInterface> = new PrefSet<ec2.CfnNetworkInterface>();
   private _securityGroup?: ec2.ISecurityGroup;
   private _connections?: ec2.Connections;
+  private _role?: iam.Role;
+  private _autoScalingGroups?: autoscaling.AutoScalingGroup[];
 
   constructor(private readonly props: FckNatInstanceProps) {
     super();
@@ -91,8 +105,8 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
   configureNat(options: ec2.ConfigureNatOptions): void {
     // Create the NAT instances. They can share a security group and a Role.
     const machineImage = this.props.machineImage || new ec2.LookupMachineImage({
-      name: 'fck-nat-al2023-*-arm64-ebs',
-      owners: ['568608671756'],
+      name: FckNatInstanceProvider.AMI_NAME,
+      owners: [FckNatInstanceProvider.AMI_OWNER],
     });
     this._securityGroup = this.props.securityGroup ?? new ec2.SecurityGroup(options.vpc, 'NatSecurityGroup', {
       vpc: options.vpc,
@@ -101,7 +115,7 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
     this._connections = new ec2.Connections({ securityGroups: [this._securityGroup] });
 
     // TODO: This should get buttoned up to only allow attaching ENIs created by this construct.
-    const role = new iam.Role(options.vpc, 'NatRole', {
+    this._role = new iam.Role(options.vpc, 'NatRole', {
       assumedBy: new iam.ServicePrincipal('ec2.amazonaws.com'),
       inlinePolicies: {
         attachNatEniPolicy: new iam.PolicyDocument({
@@ -113,6 +127,7 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
       },
     });
 
+    this._autoScalingGroups = [];
     for (const sub of options.natSubnets) {
       const networkInterface = new ec2.CfnNetworkInterface(
         sub, 'FckNatInterface', {
@@ -126,19 +141,20 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
       userData.addCommands(`echo "eni_id=${networkInterface.ref}" >> /etc/fck-nat.conf`);
       userData.addCommands('service fck-nat restart');
 
-      new autoscaling.AutoScalingGroup(
+      this._autoScalingGroups.push(new autoscaling.AutoScalingGroup(
         sub, 'FckNatAsg', {
           instanceType: this.props.instanceType,
           machineImage,
           vpc: options.vpc,
           vpcSubnets: { subnets: [sub] },
           securityGroup: this._securityGroup,
-          role,
+          role: this._role,
           desiredCapacity: 1,
           userData: userData,
           keyName: this.props.keyName,
+          groupMetrics: [autoscaling.GroupMetrics.all()],
         },
-      );
+      ));
       // NAT instance routes all traffic, both ways
       this.gateways.add(sub.availabilityZone, networkInterface);
     }
@@ -157,6 +173,26 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
       routerId: gatewayId,
       enablesInternetConnectivity: true,
     });
+  }
+
+  /**
+   * The instance role attached with the NAT instances.
+   */
+  public get role(): iam.Role {
+    if (!this._role) {
+      throw new Error('Pass the NatInstanceProvider to a Vpc before accessing \'role\'');
+    }
+    return this._role;
+  }
+
+  /**
+   * The ASGs (Auto Scaling Groups) managing the NAT instances. These can be retrieved to get metrics and
+   */
+  public get autoScalingGroups(): autoscaling.AutoScalingGroup[] {
+    if (!this._autoScalingGroups) {
+      throw new Error('Pass the NatInstanceProvider to a Vpc before accessing \'autoScalingGroups\'');
+    }
+    return this._autoScalingGroups;
   }
 
   /**
