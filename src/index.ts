@@ -49,7 +49,7 @@ export interface FckNatInstanceProps {
    * FckNatInstanceProvider({
    *   instanceType: new ec2.InstanceType('t3.micro'),
    *   machineImage: new LookupMachineImage({
-   *     name: 'fck-nat-amzn2-*-arm64-ebs',
+   *     name: 'fck-nat-al2023-*-arm64-ebs',
    *     owners: ['568608671756'],
    *   })
    * })
@@ -91,7 +91,7 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
   configureNat(options: ec2.ConfigureNatOptions): void {
     // Create the NAT instances. They can share a security group and a Role.
     const machineImage = this.props.machineImage || new ec2.LookupMachineImage({
-      name: 'fck-nat-amzn2-*-arm64-ebs',
+      name: 'fck-nat-al2023-*-arm64-ebs',
       owners: ['568608671756'],
     });
     this._securityGroup = this.props.securityGroup ?? new ec2.SecurityGroup(options.vpc, 'NatSecurityGroup', {

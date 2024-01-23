@@ -106,7 +106,7 @@ If you have a specific AMI ID you want to use, pass a `GenericLinuxImage`. For e
 FckNatInstanceProvider({
   instanceType: new ec2.InstanceType('t3.micro'),
   machineImage: new LookupMachineImage({
-    name: 'fck-nat-amzn2-*-arm64-ebs',
+    name: 'fck-nat-al2023-*-arm64-ebs',
     owners: ['568608671756'],
   })
 })

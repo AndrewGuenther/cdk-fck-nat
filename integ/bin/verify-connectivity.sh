@@ -15,9 +15,15 @@ failed_invocations=$(aws ssm list-command-invocations \
     --command-id "$command_id" \
     --query 'CommandInvocations[?Status!=`Success`].Status' --output text)
 
+successful_invocations=$(aws ssm list-command-invocations \
+    --command-id "$command_id" \
+    --query 'CommandInvocations[?Status==`Success`].Status' --output text)
+
 if [[ $failed_invocations ]]; then
     echo "Connectivity not available from one or more test VPCs"
     exit 1
 fi
+
+echo $successful_invocations
 
 echo "Connectivity established!"
