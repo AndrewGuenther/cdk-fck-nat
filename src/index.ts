@@ -2,8 +2,11 @@ import {
   aws_iam as iam,
   aws_autoscaling as autoscaling,
   aws_ec2 as ec2,
+  aws_ssm as ssm,
   Annotations,
 } from 'aws-cdk-lib';
+
+import { DEFAULT_CLOUDWATCH_CONFIG } from './internal/default_cloudwatch_config';
 
 /**
  * Preferential set
@@ -66,11 +69,21 @@ export interface FckNatInstanceProps {
   readonly instanceType: ec2.InstanceType;
 
   /**
-   * Name of SSH keypair to grant access to instance
+   * Name of SSH keypair to grant access to instance. Setting this value will not automatically update security groups,
+   * that must be done separately.
+   *
+   * @default - No SSH access will be possible.
+   * @deprecated - CDK has deprecated the `keyName` parameter, use `keyPair` instead.
+   */
+  readonly keyName?: string;
+
+  /**
+   * SSH keypair to attach to instances. Setting this value will not automatically update security groups, that must be
+   * done separately.
    *
    * @default - No SSH access will be possible.
    */
-  readonly keyName?: string;
+  readonly keyPair?: ec2.IKeyPair;
 
   /**
    * Security Group for fck-nat instances
@@ -93,8 +106,22 @@ export interface FckNatInstanceProps {
   readonly enableSsm?: boolean;
 
   /**
-   * 
+   * Add necessary role permissions and configuration for supplementary CloudWatch metrics. ENABLING THIS FEATURE WILL
+   * INCUR ADDITIONAL COSTS! See https://fck-nat.dev/develop/features/#metrics for more details.
+   *
+   * @default - Additional Cloudwatch metrics are disabled
    */
+  readonly enableCloudWatch?: boolean;
+
+  /**
+   * Optionally override the base Cloudwatch metric configuration found at https://fck-nat.dev/develop/features/#metrics
+   *
+   * If you wish to override the default parameter name, the default configuration contents are stored on the
+   * `FckNatInstanceProvider.DEFAULT_CLOUDWATCH_CONFIG` constant
+   *
+   * @default - If Cloudwatch metrics are enabled, a default configuration will be used.
+   */
+  readonly cloudWatchConfigParam?: ssm.IStringParameter;
 }
 
 export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConnectable {
@@ -110,6 +137,11 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
    */
   public static readonly AMI_OWNER = '568608671756';
 
+  /**
+   * The default CloudWatch config used when additional CloudWatch metric reporting is enabled.
+   */
+  public static readonly DEFAULT_CLOUDWATCH_CONFIG: any = DEFAULT_CLOUDWATCH_CONFIG;
+
   private gateways: PrefSet<ec2.CfnNetworkInterface> = new PrefSet<ec2.CfnNetworkInterface>();
   private _securityGroup?: ec2.ISecurityGroup;
   private _connections?: ec2.Connections;
@@ -118,12 +150,24 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
 
   constructor(private readonly props: FckNatInstanceProps) {
     super();
+
+    if (props.keyName && props.keyPair) {
+      throw new Error('Only one of keyName or keyPair can be specified!');
+    }
   }
 
   configureNat(options: ec2.ConfigureNatOptions): void {
     if (this.props.eipPool && this.props.eipPool.length < options.natSubnets.length) {
       throw new Error('If specifying an EIP pool, the size of the pool must be greater than or equal to the number ' +
         'of egress subnets in the target VPC.');
+    }
+
+    let cloudWatchConfigParam = this.props.cloudWatchConfigParam;
+    if (this.props.enableCloudWatch && !cloudWatchConfigParam) {
+      cloudWatchConfigParam = new ssm.StringParameter(options.vpc, 'FckNatCloudWatchConfigParam', {
+        parameterName: 'FckNatCloudWatchConfig',
+        stringValue: JSON.stringify(FckNatInstanceProvider.DEFAULT_CLOUDWATCH_CONFIG),
+      });
     }
 
     // Create the NAT instances. They can share a security group and a Role.
@@ -154,6 +198,18 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
       this._role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMManagedEC2InstanceDefaultPolicy'));
     }
 
+    if (this.props.enableCloudWatch) {
+      this._role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('CloudWatchAgentServerPolicy'));
+      cloudWatchConfigParam?.grantRead(this._role);
+    }
+
+    if (this.props.eipPool) {
+      this._role.addToPolicy(new iam.PolicyStatement({
+        actions: ['ec2:AssociateAddress', 'ec2:DisassociateAddress'],
+        resources: ['*'],
+      }));
+    }
+
     this._autoScalingGroups = [];
     const eipPool = this.props.eipPool ? [...this.props.eipPool] : undefined;
     for (const sub of options.natSubnets) {
@@ -170,6 +226,10 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
       if (eipPool) {
         userData.addCommands(`echo "eip_id=${eipPool.pop()}" >> /etc/fck-nat.conf`);
       }
+      if (this.props.enableCloudWatch) {
+        userData.addCommands('echo "cwagent_enabled=true" >> /etc/fck-nat.conf');
+        userData.addCommands(`echo "cwagent_cfg_param_name=${cloudWatchConfigParam?.parameterName}" >> /etc/fck-nat.conf`);
+      }
       userData.addCommands('service fck-nat restart');
 
       const autoScalingGroup = new autoscaling.AutoScalingGroup(
@@ -185,7 +245,8 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
             role: this._role,
             userData: userData,
             keyName: this.props.keyName,
-          })
+            keyPair: this.props.keyPair,
+          }),
         },
       );
       this._autoScalingGroups.push(autoScalingGroup);

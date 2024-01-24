@@ -19,6 +19,8 @@ export function getFckNatProviders (
         owners: [amiOwner]
       }),
       keyName: 'fck-nat-test',
+      enableCloudWatch: true,
+      enableSsm: true,
     }))
   }
 

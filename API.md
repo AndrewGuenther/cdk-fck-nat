@@ -56,9 +56,12 @@ const fckNatInstanceProps: FckNatInstanceProps = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.instanceType">instanceType</a></code> | <code>aws-cdk-lib.aws_ec2.InstanceType</code> | Instance type of the fck-nat instance. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.cloudWatchConfigParam">cloudWatchConfigParam</a></code> | <code>aws-cdk-lib.aws_ssm.IStringParameter</code> | Optionally override the base Cloudwatch metric configuration found at https://fck-nat.dev/develop/features/#metrics. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.eipPool">eipPool</a></code> | <code>string[]</code> | A list of EIP allocation IDs which can be attached to NAT instances. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.enableCloudWatch">enableCloudWatch</a></code> | <code>boolean</code> | Add necessary role permissions and configuration for supplementary CloudWatch metrics. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.enableSsm">enableSsm</a></code> | <code>boolean</code> | Add necessary role permissions for SSM automatically. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.keyName">keyName</a></code> | <code>string</code> | Name of SSH keypair to grant access to instance. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.keyPair">keyPair</a></code> | <code>aws-cdk-lib.aws_ec2.IKeyPair</code> | SSH keypair to attach to instances. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.machineImage">machineImage</a></code> | <code>aws-cdk-lib.aws_ec2.IMachineImage</code> | The machine image (AMI) to use. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.securityGroup">securityGroup</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup</code> | Security Group for fck-nat instances. |
 
@@ -73,6 +76,22 @@ public readonly instanceType: InstanceType;
 - *Type:* aws-cdk-lib.aws_ec2.InstanceType
 
 Instance type of the fck-nat instance.
+
+---
+
+##### `cloudWatchConfigParam`<sup>Optional</sup> <a name="cloudWatchConfigParam" id="cdk-fck-nat.FckNatInstanceProps.property.cloudWatchConfigParam"></a>
+
+```typescript
+public readonly cloudWatchConfigParam: IStringParameter;
+```
+
+- *Type:* aws-cdk-lib.aws_ssm.IStringParameter
+- *Default:* If Cloudwatch metrics are enabled, a default configuration will be used.
+
+Optionally override the base Cloudwatch metric configuration found at https://fck-nat.dev/develop/features/#metrics.
+
+If you wish to override the default parameter name, the default configuration contents are stored on the
+`FckNatInstanceProvider.DEFAULT_CLOUDWATCH_CONFIG` constant
 
 ---
 
@@ -91,6 +110,22 @@ greater than or equal to the number of egress subnets in your VPC.
 
 ---
 
+##### `enableCloudWatch`<sup>Optional</sup> <a name="enableCloudWatch" id="cdk-fck-nat.FckNatInstanceProps.property.enableCloudWatch"></a>
+
+```typescript
+public readonly enableCloudWatch: boolean;
+```
+
+- *Type:* boolean
+- *Default:* Additional Cloudwatch metrics are disabled
+
+Add necessary role permissions and configuration for supplementary CloudWatch metrics.
+
+ENABLING THIS FEATURE WILL
+INCUR ADDITIONAL COSTS! See https://fck-nat.dev/develop/features/#metrics for more details.
+
+---
+
 ##### `enableSsm`<sup>Optional</sup> <a name="enableSsm" id="cdk-fck-nat.FckNatInstanceProps.property.enableSsm"></a>
 
 ```typescript
@@ -104,7 +139,9 @@ Add necessary role permissions for SSM automatically.
 
 ---
 
-##### `keyName`<sup>Optional</sup> <a name="keyName" id="cdk-fck-nat.FckNatInstanceProps.property.keyName"></a>
+##### ~~`keyName`~~<sup>Optional</sup> <a name="keyName" id="cdk-fck-nat.FckNatInstanceProps.property.keyName"></a>
+
+- *Deprecated:* - CDK has deprecated the `keyName` parameter, use `keyPair` instead.
 
 ```typescript
 public readonly keyName: string;
@@ -114,6 +151,25 @@ public readonly keyName: string;
 - *Default:* No SSH access will be possible.
 
 Name of SSH keypair to grant access to instance.
+
+Setting this value will not automatically update security groups,
+that must be done separately.
+
+---
+
+##### `keyPair`<sup>Optional</sup> <a name="keyPair" id="cdk-fck-nat.FckNatInstanceProps.property.keyPair"></a>
+
+```typescript
+public readonly keyPair: IKeyPair;
+```
+
+- *Type:* aws-cdk-lib.aws_ec2.IKeyPair
+- *Default:* No SSH access will be possible.
+
+SSH keypair to attach to instances.
+
+Setting this value will not automatically update security groups, that must be
+done separately.
 
 ---
 
@@ -357,6 +413,7 @@ The Security Group associated with the NAT instances.
 | --- | --- | --- |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProvider.property.AMI_NAME">AMI_NAME</a></code> | <code>string</code> | The AMI name used internally when calling `LookupMachineImage`. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProvider.property.AMI_OWNER">AMI_OWNER</a></code> | <code>string</code> | The AMI owner used internally when calling `LookupMachineImage`. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProvider.property.DEFAULT_CLOUDWATCH_CONFIG">DEFAULT_CLOUDWATCH_CONFIG</a></code> | <code>any</code> | The default CloudWatch config used when additional CloudWatch metric reporting is enabled. |
 
 ---
 
@@ -387,6 +444,18 @@ The AMI owner used internally when calling `LookupMachineImage`.
 
 Can be referenced if you wish to do AMI lookups
 externally.
+
+---
+
+##### `DEFAULT_CLOUDWATCH_CONFIG`<sup>Required</sup> <a name="DEFAULT_CLOUDWATCH_CONFIG" id="cdk-fck-nat.FckNatInstanceProvider.property.DEFAULT_CLOUDWATCH_CONFIG"></a>
+
+```typescript
+public readonly DEFAULT_CLOUDWATCH_CONFIG: any;
+```
+
+- *Type:* any
+
+The default CloudWatch config used when additional CloudWatch metric reporting is enabled.
 
 ---
 
