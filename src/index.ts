@@ -174,16 +174,18 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
 
       const autoScalingGroup = new autoscaling.AutoScalingGroup(
         sub, 'FckNatAsg', {
-          instanceType: this.props.instanceType,
-          machineImage,
           vpc: options.vpc,
           vpcSubnets: { subnets: [sub] },
-          securityGroup: this._securityGroup,
-          role: this._role,
           desiredCapacity: 1,
-          userData: userData,
-          keyName: this.props.keyName,
           groupMetrics: [autoscaling.GroupMetrics.all()],
+          launchTemplate: new ec2.LaunchTemplate(sub, 'FckNatLaunchTemplate', {
+            instanceType: this.props.instanceType,
+            machineImage,
+            securityGroup: this._securityGroup,
+            role: this._role,
+            userData: userData,
+            keyName: this.props.keyName,
+          })
         },
       );
       this._autoScalingGroups.push(autoScalingGroup);
