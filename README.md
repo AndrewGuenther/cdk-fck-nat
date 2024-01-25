@@ -6,7 +6,7 @@ A CDK construct for deploying NAT Instances using [fck-nat](https://github.com/A
 * Want to use NAT instances and stay up-to-date with the latest security patches? fck-nat.
 * Want to reuse your Bastion hosts as a NAT? fck-nat.
 
-fck-nat offers a ready-to-use ARM and x86 based AMIs built on Amazon Linux 2 which can support up to 5Gbps NAT traffic
+fck-nat offers a ready-to-use ARM and x86 based AMIs built on Amazon Linux 2023 which can support up to 5Gbps NAT traffic
 on a t4g.nano instance. How does that compare to a Managed NAT Gateway?
 
 Hourly rates:
