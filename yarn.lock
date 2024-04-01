@@ -823,9 +823,9 @@
     undici-types "~5.26.4"
 
 "@types/node@^18":
-  version "18.19.21"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.21.tgz#f4ca1ac8ffb05ee4b89163c2d6fac9a1a59ee149"
-  integrity sha512-2Q2NeB6BmiTFQi4DHBzncSoq/cJMLDdhPaAoJFnFCyD9a8VPZRf7a1GAwp1Edb7ROaZc5Jz/tnZyL6EsWMRaqw==
+  version "18.19.28"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.28.tgz#c64a2c992c8ebbf61100a4570e4eebc1934ae030"
+  integrity sha512-J5cOGD9n4x3YGgVuaND6khm5x07MMdAKkRyXnjVR6KFhLMNh2yONGiP7Z+4+tBOt5mK+GvDTiacTOVGGpqiecw==
   dependencies:
     undici-types "~5.26.4"
 
@@ -3751,14 +3751,14 @@ jsesc@^2.5.1:
   integrity sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==
 
 jsii-diff@^1.63.2:
-  version "1.94.0"
-  resolved "https://registry.yarnpkg.com/jsii-diff/-/jsii-diff-1.94.0.tgz#fb1535f90b3fff45f0caa9e97bd907260f0cac4f"
-  integrity sha512-jbiMsbzi0wrBl8tuXB+HvYiIHDQfj0Ktrc7bshhzung+POnT5QCU3M0/MwNr2V+u4F0DDCvO3PFML26eXABA5w==
+  version "1.96.0"
+  resolved "https://registry.yarnpkg.com/jsii-diff/-/jsii-diff-1.96.0.tgz#fefe6862efaf420a9e00f6fe16c4669dbdd15a76"
+  integrity sha512-q2z7rjn1hDXqynGJdl2vcs5WbM2ZRLltk9SWTLx46wtyFPGEHafbgXtUE1ZpmT+nTE+rIWH0mw2x/iYxbw3z0A==
   dependencies:
-    "@jsii/check-node" "1.94.0"
-    "@jsii/spec" "^1.94.0"
+    "@jsii/check-node" "1.96.0"
+    "@jsii/spec" "^1.96.0"
     fs-extra "^10.1.0"
-    jsii-reflect "^1.94.0"
+    jsii-reflect "^1.96.0"
     log4js "^6.9.1"
     yargs "^16.2.0"
 
