@@ -22,5 +22,7 @@ dist
 tsconfig.tsbuildinfo
 /.eslintrc.json
 !.jsii
+/.prettierignore
+/.prettierrc.json
 /.gitattributes
 /.projenrc.ts
