@@ -3,7 +3,6 @@ import {
   aws_autoscaling as autoscaling,
   aws_ec2 as ec2,
   aws_ssm as ssm,
-  Annotations,
 } from 'aws-cdk-lib';
 
 import { DEFAULT_CLOUDWATCH_CONFIG } from './internal/default_cloudwatch_config';
@@ -236,7 +235,8 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
         sub, 'FckNatAsg', {
           vpc: options.vpc,
           vpcSubnets: { subnets: [sub] },
-          desiredCapacity: 1,
+          minCapacity: 1,
+          maxCapacity: 1,
           groupMetrics: [autoscaling.GroupMetrics.all()],
           launchTemplate: new ec2.LaunchTemplate(sub, 'FckNatLaunchTemplate', {
             instanceType: this.props.instanceType,
@@ -250,7 +250,6 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
         },
       );
       this._autoScalingGroups.push(autoScalingGroup);
-      Annotations.of(autoScalingGroup).acknowledgeWarning('@aws-cdk/aws-autoscaling:desiredCapacitySet');
       // NAT instance routes all traffic, both ways
       this.gateways.add(sub.availabilityZone, networkInterface);
     }
