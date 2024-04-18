@@ -244,7 +244,7 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
             securityGroup: this._securityGroup,
             role: this._role,
             userData: userData,
-            keyName: this.props.keyName,
+            ... (this.props.keyName && { keyName: this.props.keyName }),
             keyPair: this.props.keyPair,
           }),
         },
