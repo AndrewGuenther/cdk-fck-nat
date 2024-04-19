@@ -1,4 +1,4 @@
-import { awscdk } from 'projen';
+import { awscdk, javascript } from 'projen';
 import { DependabotScheduleInterval } from 'projen/lib/github';
 
 const project = new awscdk.AwsCdkConstructLibrary({
@@ -35,6 +35,10 @@ const project = new awscdk.AwsCdkConstructLibrary({
   projenrcTs: true,
   jsiiVersion: '~5.3',
   typescriptVersion: '~5.3',
+});
+
+new javascript.Prettier(project, {
+  settings: { singleQuote: true, printWidth: 120 },
 });
 
 project.synth();

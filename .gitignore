@@ -53,4 +53,6 @@ junit.xml
 .jsii
 tsconfig.json
 !/API.md
+!/.prettierignore
+!/.prettierrc.json
 !/.projenrc.ts
