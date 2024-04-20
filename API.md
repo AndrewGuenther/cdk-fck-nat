@@ -64,6 +64,7 @@ const fckNatInstanceProps: FckNatInstanceProps = { ... }
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.keyPair">keyPair</a></code> | <code>aws-cdk-lib.aws_ec2.IKeyPair</code> | SSH keypair to attach to instances. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.machineImage">machineImage</a></code> | <code>aws-cdk-lib.aws_ec2.IMachineImage</code> | The machine image (AMI) to use. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.securityGroup">securityGroup</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup</code> | Security Group for fck-nat instances. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.userData">userData</a></code> | <code>string[]</code> | Optionally add commands to the user data of the instance. |
 
 ---
 
@@ -210,6 +211,19 @@ public readonly securityGroup: ISecurityGroup;
 - *Default:* A new security group will be created
 
 Security Group for fck-nat instances.
+
+---
+
+##### `userData`<sup>Optional</sup> <a name="userData" id="cdk-fck-nat.FckNatInstanceProps.property.userData"></a>
+
+```typescript
+public readonly userData: string[];
+```
+
+- *Type:* string[]
+- *Default:* No additional user commands are added.
+
+Optionally add commands to the user data of the instance.
 
 ---
 
