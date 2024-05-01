@@ -3872,9 +3872,9 @@ jsii@1.94.0:
     yargs "^16.2.0"
 
 jsii@~5.3, jsii@~5.3.0:
-  version "5.3.33"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.3.33.tgz#c8b066f04943593448ed6266a8d0985f13a75c7f"
-  integrity sha512-6+Q2ysfWvzKBjZwAOrCmI4pgt+DNYTVrbQbT4Ij3nOXoZOgDGD9SYFxjkamftWgHb3bfc7UJHi5li7AlgNHtKw==
+  version "5.3.34"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.3.34.tgz#13033685481feaa91757fcb56144ddc2db6558e4"
+  integrity sha512-vJc+DwAdkr1k66vn2YlybJyyv7fiCV8jOccXmdazZ7Ob+lbED0UTYZDTGFwnqj2feP17maIj1R0MaiDqxjsjKw==
   dependencies:
     "@jsii/check-node" "1.96.0"
     "@jsii/spec" "^1.96.0"
