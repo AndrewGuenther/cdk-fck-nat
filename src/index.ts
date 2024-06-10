@@ -121,6 +121,13 @@ export interface FckNatInstanceProps {
    * @default - If Cloudwatch metrics are enabled, a default configuration will be used.
    */
   readonly cloudWatchConfigParam?: ssm.IStringParameter;
+
+  /**
+   * Optionally add commands to the user data of the instance.
+   *
+   * @default - No additional user commands are added.
+   */
+  readonly userData?: string[];
 }
 
 export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConnectable {
@@ -230,6 +237,13 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
         userData.addCommands(`echo "cwagent_cfg_param_name=${cloudWatchConfigParam?.parameterName}" >> /etc/fck-nat.conf`);
       }
       userData.addCommands('service fck-nat restart');
+
+      if (this.props.userData) {
+        for (let ud of this.props.userData) {
+          userData.addCommands(ud);
+        }
+      }
+
 
       const autoScalingGroup = new autoscaling.AutoScalingGroup(
         sub, 'FckNatAsg', {
