@@ -3897,12 +3897,12 @@ jsii@1.94.0:
     yargs "^16.2.0"
 
 jsii@~5.3, jsii@~5.3.0:
-  version "5.3.36"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.3.36.tgz#f599ccb354bf74c3cc0141397c6d782ab371afa7"
-  integrity sha512-4Lt+lha53ODCU/NGOdmBbae+ASbP/xtiIOMPaG/NRZX3tDOD7g52ZXl2K7lSXE0mm/Yu+e6kq2pc0ls5E6OeQA==
+  version "5.3.42"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.3.42.tgz#463ff23d0a3c94cfa91d9b15ac0db702a5d3b7bd"
+  integrity sha512-wWGhxqRNlCNXsZUXiwKMvJPHdEFw8nySoCLhfsx+vQPHOl/sub9xvI4Z4F/abYIboZx8SpqTnTsOeapiH+NGIw==
   dependencies:
-    "@jsii/check-node" "1.98.0"
-    "@jsii/spec" "^1.98.0"
+    "@jsii/check-node" "1.101.0"
+    "@jsii/spec" "^1.101.0"
     case "^1.6.3"
     chalk "^4"
     downlevel-dts "^0.11.0"
