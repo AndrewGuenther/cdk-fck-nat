@@ -624,14 +624,6 @@
     chalk "^4.1.2"
     semver "^7.5.4"
 
-"@jsii/check-node@1.96.0":
-  version "1.96.0"
-  resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.96.0.tgz#f144caa92d0c47aac3b3aa315860847892d0b04e"
-  integrity sha512-1EZudLi9wMg6d8JYu8t5s0B+WhyAJvOezhdmFv+PTrTc1Eze7NRY7uZuvBRRkBvqvOWlKkCfBByyeZJnLcxNMA==
-  dependencies:
-    chalk "^4.1.2"
-    semver "^7.5.4"
-
 "@jsii/check-node@1.98.0":
   version "1.98.0"
   resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.98.0.tgz#140860478009834aa35dc8479a26db1a221439d5"
@@ -647,7 +639,7 @@
   dependencies:
     ajv "^8.12.0"
 
-"@jsii/spec@^1.101.0", "@jsii/spec@^1.80.0", "@jsii/spec@^1.94.0", "@jsii/spec@^1.96.0", "@jsii/spec@^1.98.0":
+"@jsii/spec@^1.101.0", "@jsii/spec@^1.80.0", "@jsii/spec@^1.94.0", "@jsii/spec@^1.98.0":
   version "1.101.0"
   resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.101.0.tgz#b1c3488d5df2ee0c355e0a3493e3de4add9d7452"
   integrity sha512-855OnjKm4RTzRA78GGTNBG/GLe6X/vHJYD58zg7Rw8rWS7sU6iB65TM/7P7R3cufVew8umjjPjvW7ygS6ZqITQ==
@@ -3859,18 +3851,18 @@ jsii-rosetta@^1.80.0:
     yargs "^16.2.0"
 
 jsii-rosetta@~5.3:
-  version "5.3.36"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.3.36.tgz#7652a42c60da23016c5d273fe459d5aa79ce5105"
-  integrity sha512-OGDHG4lhKFWrKLYueGcJra6QpRQot4nL6U1QbYo35irVLILP/GomUYkSDPRq8cwFQ4g74TqBvetfMQDffY3AsA==
+  version "5.3.47"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.3.47.tgz#6e820313e5d185aadf7baa763dcef4456c643fd1"
+  integrity sha512-9WFIyigdb+3Dy8jk+IHt9HQbeaUspHVfv2fJoagDhq/MeoUVY6QGmvejdmtqid76jQ2JVsHsPUW/rlLwFXFyZQ==
   dependencies:
-    "@jsii/check-node" "1.96.0"
-    "@jsii/spec" "^1.96.0"
+    "@jsii/check-node" "1.101.0"
+    "@jsii/spec" "^1.101.0"
     "@xmldom/xmldom" "^0.8.10"
     chalk "^4"
     commonmark "^0.31.0"
     fast-glob "^3.3.2"
     jsii "~5.3.0"
-    semver "^7.6.0"
+    semver "^7.6.3"
     semver-intersect "^1.5.0"
     stream-json "^1.8.0"
     typescript "~5.3"
