@@ -616,6 +616,14 @@
     chalk "^4.1.2"
     semver "^7.6.0"
 
+"@jsii/check-node@1.103.0":
+  version "1.103.0"
+  resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.103.0.tgz#a85ff4968fdd27bdb89de01e66d5d173600d0b57"
+  integrity sha512-fnlzGcQSJ5/SPSOoSv7qaJMSARz2MN7gER0ZKbkHhTrBQU3A/TNrLvTLzOtRnygx9xOlKZkgt05UXG5Ovr4iww==
+  dependencies:
+    chalk "^4.1.2"
+    semver "^7.6.3"
+
 "@jsii/check-node@1.103.1":
   version "1.103.1"
   resolved "https://registry.yarnpkg.com/@jsii/check-node/-/check-node-1.103.1.tgz#6eb9147993b9f035ae1730c5821a75872a5e4928"
@@ -639,7 +647,7 @@
   dependencies:
     ajv "^8.12.0"
 
-"@jsii/spec@^1.101.0", "@jsii/spec@^1.103.1", "@jsii/spec@^1.80.0", "@jsii/spec@^1.94.0":
+"@jsii/spec@^1.101.0", "@jsii/spec@^1.103.0", "@jsii/spec@^1.103.1", "@jsii/spec@^1.80.0", "@jsii/spec@^1.94.0":
   version "1.103.1"
   resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.103.1.tgz#2f8e61c603238c56d30d26100eb7ee9f51aa35b8"
   integrity sha512-14OGYM3DjEBjUOUaih+bwPgkhFnR8L9TSNSM0oE0L0hjWscTapvClqOgMDJ1ID52qkROCAgKl1d71Vmm4v0Buw==
@@ -1524,7 +1532,7 @@ commonmark@^0.30.0:
     minimist ">=1.2.2"
     string.prototype.repeat "^0.2.0"
 
-commonmark@^0.31.0, commonmark@^0.31.1:
+commonmark@^0.31.1:
   version "0.31.1"
   resolved "https://registry.yarnpkg.com/commonmark/-/commonmark-0.31.1.tgz#5c8b1b5eaaca00a0912cad68d1f0f00c836cecd3"
   integrity sha512-M6pbc3sRU96iiOK7rmjv/TNrXvTaOscvthUCq7YOrlvZWbqAA36fyEtBvyI3nCcEK4u+JAy9sAdtftIeXwIWig==
@@ -3610,15 +3618,15 @@ jsii-rosetta@^1.80.0:
     yargs "^16.2.0"
 
 jsii-rosetta@~5.3:
-  version "5.3.47"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.3.47.tgz#6e820313e5d185aadf7baa763dcef4456c643fd1"
-  integrity sha512-9WFIyigdb+3Dy8jk+IHt9HQbeaUspHVfv2fJoagDhq/MeoUVY6QGmvejdmtqid76jQ2JVsHsPUW/rlLwFXFyZQ==
+  version "5.3.52"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.3.52.tgz#4b8ab12e178df0a020a1b376c27385eeff5d658c"
+  integrity sha512-D9QUmJHYwdaNIrTLbyjqNWaf61h1+AKaP9iYP9KXWLMFQ1jq4eiWf+7SSM7QmS9WPuxgxMpd6u27qw2JjD1CNg==
   dependencies:
-    "@jsii/check-node" "1.101.0"
-    "@jsii/spec" "^1.101.0"
+    "@jsii/check-node" "1.103.0"
+    "@jsii/spec" "^1.103.0"
     "@xmldom/xmldom" "^0.8.10"
     chalk "^4"
-    commonmark "^0.31.0"
+    commonmark "^0.31.1"
     fast-glob "^3.3.2"
     jsii "~5.3.0"
     semver "^7.6.3"
