@@ -128,6 +128,16 @@ export interface FckNatInstanceProps {
    * @default - No additional user commands are added.
    */
   readonly userData?: string[];
+
+  /**
+   * 
+   * Configures the auto-scaling group update policy for the fck-nat instances.
+   * This will update the existing instance and new instances with the latest ASG configuration. 
+   * See: https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_autoscaling.UpdatePolicy.html
+   * @default -  No update policy is applied. 
+   */ 
+  readonly asgUpdatePolicy?: autoscaling.UpdatePolicy;
+  
 }
 
 export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConnectable {
@@ -261,6 +271,7 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
             ... (this.props.keyName && { keyName: this.props.keyName }),
             keyPair: this.props.keyPair,
           }),
+          ... ( this.props.asgUpdatePolicy && { updatePolicy: this.props.asgUpdatePolicy } ), 
         },
       );
       this._autoScalingGroups.push(autoScalingGroup);
