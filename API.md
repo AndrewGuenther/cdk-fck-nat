@@ -56,7 +56,7 @@ public readonly asgUpdatePolicy: UpdatePolicy;
 
 Configures the auto-scaling group update policy for the fck-nat instances.
 
-This will update the existing instance and new instances with the latest ASG configuration. 
+This will update the existing instance and new instances with the latest ASG configuration.
 See: https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_autoscaling.UpdatePolicy.html
 
 ---
