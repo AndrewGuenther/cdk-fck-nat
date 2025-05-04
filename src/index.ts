@@ -1,9 +1,11 @@
+import ec2alpha from '@aws-cdk/aws-ec2-alpha';
 import {
   aws_iam as iam,
   aws_autoscaling as autoscaling,
   aws_ec2 as ec2,
   aws_ssm as ssm,
 } from 'aws-cdk-lib';
+import { Dependable } from 'constructs';
 
 import { DEFAULT_CLOUDWATCH_CONFIG } from './internal/default_cloudwatch_config';
 
@@ -36,6 +38,8 @@ class PrefSet<A> {
     return this.vals;
   }
 }
+
+type VpcVersion = 1 | 2;
 
 /**
  * Properties for a fck-nat instance
@@ -128,6 +132,13 @@ export interface FckNatInstanceProps {
    * @default - No additional user commands are added.
    */
   readonly userData?: string[];
+
+  /**
+   * The VPC version to use.
+   *
+   * @default - 1
+   */
+  readonly vpcVersion?: VpcVersion;
 }
 
 export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConnectable {
@@ -153,16 +164,21 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
   private _connections?: ec2.Connections;
   private _role?: iam.Role;
   private _autoScalingGroups?: autoscaling.AutoScalingGroup[];
+  private _vpcVersion: VpcVersion;
 
   constructor(private readonly props: FckNatInstanceProps) {
     super();
-
+    this._vpcVersion = props.vpcVersion ?? 1;
     if (props.keyName && props.keyPair) {
       throw new Error('Only one of keyName or keyPair can be specified!');
     }
   }
 
-  configureNat(options: ec2.ConfigureNatOptions): void {
+  configureNat(options: {
+    readonly vpc: ec2.IVpc;
+    readonly natSubnets: ec2.ISubnet[];
+    readonly privateSubnets: ec2.ISubnet[];
+  }): void {
     if (this.props.eipPool && this.props.eipPool.length < options.natSubnets.length) {
       throw new Error('If specifying an EIP pool, the size of the pool must be greater than or equal to the number ' +
         'of egress subnets in the target VPC.');
@@ -274,14 +290,35 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
     }
   }
 
-  configureSubnet(subnet: ec2.PrivateSubnet): void {
+  configureSubnet(subnet: ec2.ISubnet | ec2.PublicSubnet): void {
     const az = subnet.availabilityZone;
     const gatewayId = this.gateways.pick(az).ref;
-    subnet.addRoute('DefaultRoute', {
-      routerType: ec2.RouterType.NETWORK_INTERFACE,
-      routerId: gatewayId,
-      enablesInternetConnectivity: true,
-    });
+
+    if (this._vpcVersion === 1) {
+      if (subnet instanceof ec2.PublicSubnet) {
+        subnet.addRoute('DefaultRoute', {
+          routerType: ec2.RouterType.NETWORK_INTERFACE,
+          routerId: gatewayId,
+          enablesInternetConnectivity: true,
+        });
+      } else {
+        throw new Error('Expected PublicSubnet in VPC version 1');
+      }
+    } else if (this._vpcVersion === 2) {
+      const gateway = {
+        routerTargetId: gatewayId,
+        routerType: ec2.RouterType.NETWORK_INTERFACE,
+      };
+
+      Dependable.implement(gateway, { dependencyRoots: [subnet] });
+
+      // Each subnet here needs their own route table or else we'll create a '0.0.0.0/0' multiple times for the same route table
+      new ec2alpha.Route(subnet, 'DefaultRoute', {
+        routeTable: subnet.routeTable,
+        destination: '0.0.0.0/0',
+        target: { gateway },
+      });
+    }
   }
 
   /**
