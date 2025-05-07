@@ -263,6 +263,7 @@ export class FckNatInstanceProvider extends ec2.NatProvider implements ec2.IConn
           maxCapacity: 1,
           groupMetrics: [autoscaling.GroupMetrics.all()],
           launchTemplate: new ec2.LaunchTemplate(sub, 'FckNatLaunchTemplate', {
+            associatePublicIpAddress: true,
             instanceType: this.props.instanceType,
             machineImage,
             securityGroup: this._securityGroup,
