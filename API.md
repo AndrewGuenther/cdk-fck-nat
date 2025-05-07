@@ -20,6 +20,7 @@ const fckNatInstanceProps: FckNatInstanceProps = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.instanceType">instanceType</a></code> | <code>aws-cdk-lib.aws_ec2.InstanceType</code> | Instance type of the fck-nat instance. |
+| <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.asgUpdatePolicy">asgUpdatePolicy</a></code> | <code>aws-cdk-lib.aws_autoscaling.UpdatePolicy</code> | Configures the auto-scaling group update policy for the fck-nat instances. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.cloudWatchConfigParam">cloudWatchConfigParam</a></code> | <code>aws-cdk-lib.aws_ssm.IStringParameter</code> | Optionally override the base Cloudwatch metric configuration found at https://fck-nat.dev/develop/features/#metrics. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.eipPool">eipPool</a></code> | <code>string[]</code> | A list of EIP allocation IDs which can be attached to NAT instances. |
 | <code><a href="#cdk-fck-nat.FckNatInstanceProps.property.enableCloudWatch">enableCloudWatch</a></code> | <code>boolean</code> | Add necessary role permissions and configuration for supplementary CloudWatch metrics. |
@@ -41,6 +42,22 @@ public readonly instanceType: InstanceType;
 - *Type:* aws-cdk-lib.aws_ec2.InstanceType
 
 Instance type of the fck-nat instance.
+
+---
+
+##### `asgUpdatePolicy`<sup>Optional</sup> <a name="asgUpdatePolicy" id="cdk-fck-nat.FckNatInstanceProps.property.asgUpdatePolicy"></a>
+
+```typescript
+public readonly asgUpdatePolicy: UpdatePolicy;
+```
+
+- *Type:* aws-cdk-lib.aws_autoscaling.UpdatePolicy
+- *Default:* No update policy is applied.
+
+Configures the auto-scaling group update policy for the fck-nat instances.
+
+This will update the existing instance and new instances with the latest ASG configuration.
+See: https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_autoscaling.UpdatePolicy.html
 
 ---
 
